@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sayt Hazırlanır</title>
+<style>
+    /* Genel ayarlar ve arka plan */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #121212;
+    color: #00FF00;  /* Hacker stilinde yeşil renk */
+    font-family: 'Inter', sans-serif;  /* GitHub fontu */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Tam ekran örtü (overlay) */
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+/* Konteyner stil */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.9);
+    border: 3px solid #00FF00;  /* Yeşil kenarlık */
+    width: 80%;
+    max-width: 900px;
+}
+
+/* Başlık ve açıklama */
+.title {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #00FF00;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    animation: titleGlow 1.5s infinite alternate;
+}
+
+.description {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+/* Glitch animasyonu için metin */
+.glitch-text p {
+    font-size: 2rem;
+    color: #00FF00;
+    font-family: 'Courier New', Courier, monospace;
+    position: relative;
+    display: inline-block;
+    animation: glitch 2s infinite;
+}
+
+@keyframes glitch {
+    0% {
+        opacity: 0.1;
+        transform: translateX(0);
+    }
+    25% {
+        opacity: 1;
+        transform: translateX(-5px);
+    }
+    50% {
+        opacity: 0.5;
+        transform: translateX(5px);
+    }
+    75% {
+        opacity: 1;
+        transform: translateX(-5px);
+    }
+    100% {
+        opacity: 0.1;
+        transform: translateX(5px);
+    }
+}
+
+/* İmlec animasyonu */
+@keyframes cursorBlink {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+.cursor {
+    width: 10px;
+    height: 30px;
+    background-color: #00FF00;
+    display: inline-block;
+    animation: cursorBlink 1s infinite;
+    margin-top: 20px;
+}
+
+/* Sosyal medya bağlantıları */
+.social-links {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.social-links p {
+    font-size: 1.5rem;
+    color: #fff;
+}
+
+.social-links .social-icon {
+    display: inline-block;
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1.5rem;
+    color: #00FF00;
+    background-color: #000;
+    border-radius: 5px;
+    text-decoration: none;
+    border: 2px solid #00FF00;
+    transition: all 0.3s ease;
+}
+
+.social-links .social-icon:hover {
+    background-color: #00FF00;
+    color: #000;
+    border-color: #000;
+}
+
+/* Link parlaması */
+a {
+    color: #00FF00;
+    text-decoration: none;
+    font-size: 1.2rem;
+    animation: linkGlow 1.5s infinite alternate;
+}
+
+@keyframes linkGlow {
+    0% {
+        text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 20px #00FF00;
+    }
+    100% {
+        text-shadow: 0 0 15px #00FF00, 0 0 30px #00FF00, 0 0 50px #00FF00;
+    }
+}
+
+</style>
+    <!-- Font Awesome ikonu için ekleme -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- GitHub Fontu için Google Fonts'tan 'Inter' fontu -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="overlay">
+        <div class="container">
+            <h1 class="title">Sayt Hazırlanır</h1>
+            <p class="description">Bizim saytımız yenilənir. Çox yaxında sizinlə olacaq!</p>
+            <div class="glitch-text">
+                <p>Yenilənmə faizi: <span id="percentage">31%</span></p>
+            </div>
+            <p class="next">> Yenilənmə vaxtı</p>
+            <p class="next">> Çox yaxında sizi gözləyirik</p>
+            <div class="cursor"></div>
+
+            <!-- Sosyal Medya Bağlantıları -->
+            <div class="social-links">
+                <p><strong>Əlaqə:</strong></p>
+                <a href="https://www.linkedin.com/in/farhadsultan" target="_blank" class="social-icon">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                <a href="https://www.instagram.com/ferhad.sultann" target="_blank" class="social-icon">
+                    <i class="fab fa-instagram"></i> Instagram
+                </a>
+            </div>
+        </div>
+    </div>
+
+<script>
+    // Faiz dəyərinin artıb-azalması üçün dəyişən
+let faiz = 31;  // Başlangıç faiz dəyəri
+
+// Faiz dəyərinin artıb-azalmasını təmin edən funksiya
+function faizArtibAzal() {
+    // Faiz dəyərini təsadüfi artırıb-azaltma
+    let artir = Math.random() > 0.5;  // Təkrarlanan təsadüfi artırma/azaltma
+    let qiymetDeğişdir = artir ? Math.random() * 2 : Math.random() * -2; // Təsadüfi dəyişiklik
+
+    // Yeni faiz hesablanır
+    faiz = Math.max(0, Math.min(100, faiz + qiymetDeğişdir));  // Faiz dəyəri 0 ilə 100 arasında olmalıdır
+
+    // Yeni faiz dəyəri HTML elementinə yazılır
+    document.getElementById('percentage').textContent = faiz.toFixed(1) + '%';
+}
+
+// 1 saniyədə bir faiz dəyərini yeniləyirik
+setInterval(faizArtibAzal, 1000);
+
+</script>
+</body>
+</html>
