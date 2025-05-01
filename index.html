@@ -48,6 +48,7 @@
             padding: 20px;
         }
 
+        /* Header Styles */
         header {
             text-align: center;
             padding: 40px 0;
@@ -85,6 +86,73 @@
             transform: rotate(30deg);
         }
 
+        /* Slider Section */
+        .sliderSection {
+            position: relative;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--card-bg-color);
+            margin-bottom: 60px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sliderOverlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 20px;
+        }
+
+        .sliderOverlay h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .sliderOverlay p {
+            font-size: 24px;
+            max-width: 600px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Search and Categories */
         .searchContainer {
             margin-bottom: 40px;
             display: flex;
@@ -111,10 +179,27 @@
 
         .categoriesContainer {
             display: flex;
-            flex-wrap: wrap;
             gap: 10px;
             margin-bottom: 30px;
-            justify-content: center;
+            overflow-x: auto;
+            padding: 10px 0;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--card-bg-color);
+        }
+
+        .categoriesContainer::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .categoriesContainer::-webkit-scrollbar-track {
+            background: var(--card-bg-color);
+        }
+
+        .categoriesContainer::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
         }
 
         .categoryBtn {
@@ -126,6 +211,7 @@
             cursor: pointer;
             transition: var(--transition);
             font-size: 14px;
+            flex-shrink: 0;
         }
 
         .categoryBtn:hover, .categoryBtn.active {
@@ -134,10 +220,19 @@
             border-color: var(--primary-color);
         }
 
+        /* Menu Section */
         .menuContainer {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .menuContainer.visible {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         .menuSection {
@@ -248,15 +343,121 @@
             display: none;
         }
 
+        /* Footer Styles */
         footer {
-            text-align: center;
-            padding: 40px 0;
-            margin-top: 60px;
-            border-top: 1px solid var(--text-light-color);
+            padding: 60px 0;
+            margin-top: 80px;
+            background-color: var(--card-bg-color);
+            color: var(--text-light-color);
+            box-shadow: var(--card-shadow);
+        }
+
+        .footerContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .footerSection h3 {
+            font-size: 20px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footerSection h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background-color: var(--primary-color);
+        }
+
+        .footerSection p, .footerSection a {
+            font-size: 16px;
+            color: var(--text-light-color);
+            margin-bottom: 10px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footerSection a:hover {
+            color: var(--primary-color);
+        }
+
+        .socialIcons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .socialIcons a {
+            font-size: 24px;
             color: var(--text-light-color);
         }
 
+        .socialIcons a:hover {
+            color: var(--primary-color);
+        }
+
+        .footerBottom {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--text-light-color);
+            font-size: 14px;
+        }
+
+        /* Scroll Top Button */
+        .scrollTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer centrality;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 99;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .scrollTopBtn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scrollTopBtn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+
+        /* Responsive Design */
         @media (max-width: 768px) {
+            .sliderSection {
+                height: 70vh;
+            }
+
+            .sliderOverlay h2 {
+                font-size: 32px;
+            }
+
+            .sliderOverlay p {
+                font-size: 18px;
+            }
+
             .menuContainer {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             }
@@ -281,9 +482,42 @@
                 top: 30px;
                 right: 10px;
             }
+
+            .scrollTopBtn {
+                width: 40px;
+                height: 40px;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .footerContainer {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footerSection h3::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+
+            .socialIcons {
+                justify-content: center;
+            }
         }
 
         @media (max-width: 480px) {
+            .sliderSection {
+                height: 60vh;
+            }
+
+            .sliderOverlay h2 {
+                font-size: 24px;
+            }
+
+            .sliderOverlay p {
+                font-size: 16px;
+            }
+
             .menuContainer {
                 grid-template-columns: 1fr;
             }
@@ -318,50 +552,38 @@
         .menuItem {
             animation: fadeIn 0.5s ease forwards;
         }
-
-        /* Scroll Top Button */
-        .scrollTopBtn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--primary-color);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-            z-index: 99;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-        }
-
-        .scrollTopBtn.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .scrollTopBtn:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-5px);
-        }
-
-        @media (max-width: 768px) {
-            .scrollTopBtn {
-                width: 40px;
-                height: 40px;
-                bottom: 20px;
-                right: 20px;
-            }
-        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <!-- Home Section with Slider -->
+    <section class="sliderSection" id="home">
+        <div class="slider">
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4" alt="Restaurant Interior">
+                <div class="sliderOverlay">
+                    <h2>Welcome to Elegance</h2>
+                    <p>Indulge in an exquisite culinary experience crafted with passion.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1504672281656-e3e7b0afebab" alt="Gourmet Dish">
+                <div class="sliderOverlay">
+                    <h2>Savor the Flavor</h2>
+                    <p>Discover our signature dishes made with the finest ingredients.</p>
+                </div>
+            </div>
+            <div class="slide">
+                <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae" alt="Dining Experience">
+                <div class="sliderOverlay">
+                    <h2>Unforgettable Moments</h2>
+                    <p>Enjoy a dining experience that delights all your senses.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <div class="container" id="menu">
         <header>
             <div class="logo" data-aos="fade-down">Elegance</div>
             <div class="tagline" data-aos="fade-up">Exquisite Culinary Experience</div>
@@ -388,17 +610,40 @@
         </div>
 
         <div class="menuContainer" id="menuContainer">
-            <!-- Menu sections will be dynamically inserted here -->
             <div class="emptyResult" id="emptyResult">
                 No menu items match your search. Please try different keywords.
             </div>
         </div>
     </div>
 
+    <!-- Footer Section -->
     <footer>
-        <p>© 2025 Elegance Restaurant. All rights reserved.</p>
+        <div class="footerContainer">
+            <div class="footerSection">
+                <h3>About Elegance</h3>
+                <p>Elegance Restaurant offers a unique dining experience with a focus on fresh, high-quality ingredients and exceptional service.</p>
+            </div>
+            <div class="footerSection">
+                <h3>Contact Us</h3>
+                <p><a href="mailto:info@elegancerestaurant.com">info@elegancerestaurant.com</a></p>
+                <p><a href="tel:+1234567890">+1 (234) 567-890</a></p>
+                <p>123 Gourmet Street, Food City</p>
+            </div>
+            <div class="footerSection">
+                <h3>Follow Us</h3>
+                <div class="socialIcons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footerBottom">
+            <p>© 2025 Elegance Restaurant. All rights reserved.</p>
+        </div>
     </footer>
 
+    <!-- Scroll to Top Button -->
     <div class="scrollTopBtn" id="scrollTopBtn">
         <i class="fas fa-arrow-up"></i>
     </div>
@@ -412,7 +657,7 @@
             once: true
         });
 
-        // Restaurant menu data
+        // Restaurant menu data (same as provided)
         const menuData = {
             appetizers: [
                 {
@@ -740,7 +985,7 @@
                     price: 19.95,
                     rating: 4.7,
                     image: '/api/placeholder/400/300',
-category: 'pizza'
+                    category: 'pizza'
                 }
             ],
             desserts: [
@@ -894,45 +1139,60 @@ category: 'pizza'
         const themeToggle = document.getElementById('themeToggle');
         const scrollTopBtn = document.getElementById('scrollTopBtn');
 
+        // Slider Functionality
+        const slides = document.querySelectorAll('.slide');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Auto-rotate slider every 5 seconds
+        setInterval(nextSlide, 5000);
+        showSlide(currentSlide);
+
         // Initialize Menu
         function initMenu() {
-            // Create menu sections
             for (const category in menuData) {
                 createMenuSection(category, menuData[category]);
             }
-            
-            // Show all menu items initially
             filterMenuByCategory('all');
         }
 
-        // Create menu section
+        // Create Menu Section
         function createMenuSection(category, items) {
             const sectionDiv = document.createElement('div');
             sectionDiv.className = 'menuSection';
             sectionDiv.id = `section-${category}`;
             sectionDiv.dataset.category = category;
-            
+
             const sectionTitle = document.createElement('h2');
             sectionTitle.className = 'sectionTitle';
             sectionTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1);
             sectionDiv.appendChild(sectionTitle);
-            
-            // Create menu items
+
             items.forEach(item => {
                 const menuItemDiv = createMenuItem(item);
                 sectionDiv.appendChild(menuItemDiv);
             });
-            
+
             menuContainer.appendChild(sectionDiv);
         }
 
-        // Create menu item
+        // Create Menu Item
         function createMenuItem(item) {
             const itemDiv = document.createElement('div');
             itemDiv.className = 'menuItem';
             itemDiv.dataset.aos = 'fade-up';
             itemDiv.dataset.category = item.category;
-            
+
             const html = `
                 <img src="${item.image}" alt="${item.name}" class="menuItemImg">
                 <div class="menuItemContent">
@@ -947,32 +1207,32 @@ category: 'pizza'
                     </div>
                 </div>
             `;
-            
+
             itemDiv.innerHTML = html;
             return itemDiv;
         }
 
-        // Get rating stars
+        // Get Rating Stars
         function getRatingStars(rating) {
             let stars = '';
             const fullStars = Math.floor(rating);
             const hasHalfStar = rating % 1 >= 0.5;
-            
+
             for (let i = 0; i < fullStars; i++) {
                 stars += '<i class="fas fa-star star"></i>';
             }
-            
+
             if (hasHalfStar) {
                 stars += '<i class="fas fa-star-half-alt star"></i>';
             }
-            
+
             return stars;
         }
 
-        // Filter menu by category
+        // Filter Menu by Category
         function filterMenuByCategory(category) {
             const sections = document.querySelectorAll('.menuSection');
-            
+
             if (category === 'all') {
                 sections.forEach(section => {
                     section.classList.add('active');
@@ -986,56 +1246,46 @@ category: 'pizza'
                     }
                 });
             }
-            
-            // Update active button
+
             categoryBtns.forEach(btn => {
-                if (btn.dataset.category === category) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
+                btn.classList.toggle('active', btn.dataset.category === category);
             });
         }
 
-        // Search functionality
+        // Search Functionality
         function searchMenu(query) {
             query = query.toLowerCase().trim();
-            
+
             if (query === '') {
-                // Reset to showing all items
                 filterMenuByCategory(document.querySelector('.categoryBtn.active').dataset.category);
                 emptyResult.style.display = 'none';
                 return;
             }
-            
+
             let foundItems = false;
-            
-            // Hide all sections first
+
             document.querySelectorAll('.menuSection').forEach(section => {
                 section.classList.remove('active');
             });
-            
-            // Search through all items
+
             for (const category in menuData) {
                 const items = menuData[category];
                 const section = document.getElementById(`section-${category}`);
-                
+
                 if (!section) continue;
-                
+
                 let sectionHasMatch = false;
-                
-                // Get all item elements in this section (excluding the title)
+
                 const itemElements = section.querySelectorAll('.menuItem');
-                
+
                 items.forEach((item, index) => {
                     const itemElement = itemElements[index];
-                    
+
                     if (!itemElement) return;
-                    
-                    // Check if item matches search query
+
                     const matchesName = item.name.toLowerCase().includes(query);
                     const matchesDesc = item.description.toLowerCase().includes(query);
-                    
+
                     if (matchesName || matchesDesc) {
                         itemElement.style.display = 'flex';
                         sectionHasMatch = true;
@@ -1044,32 +1294,25 @@ category: 'pizza'
                         itemElement.style.display = 'none';
                     }
                 });
-                
-                // Show section if it has matching items
+
                 if (sectionHasMatch) {
                     section.classList.add('active');
                 }
             }
-            
-            // Show/hide empty result message
+
             emptyResult.style.display = foundItems ? 'none' : 'block';
         }
 
-        // Toggle dark/light theme
+        // Toggle Theme
         function toggleTheme() {
             const body = document.body;
             const icon = themeToggle.querySelector('i');
-            
+
             body.classList.toggle('darkMode');
-            
-            if (body.classList.contains('darkMode')) {
-                icon.className = 'fas fa-sun';
-            } else {
-                icon.className = 'fas fa-moon';
-            }
+            icon.className = body.classList.contains('darkMode') ? 'fas fa-sun' : 'fas fa-moon';
         }
 
-        // Scroll to top functionality
+        // Scroll to Top
         function scrollToTop() {
             window.scrollTo({
                 top: 0,
@@ -1077,25 +1320,26 @@ category: 'pizza'
             });
         }
 
-        // Check scroll position for scroll to top button
+        // Check Scroll Position
         function checkScrollPosition() {
-            if (window.scrollY > 300) {
+            const menuContainer = document.getElementById('menuContainer');
+            const scrollY = window.scrollY;
+
+            if (scrollY > 300) {
                 scrollTopBtn.classList.add('visible');
+                menuContainer.classList.add('visible');
             } else {
                 scrollTopBtn.classList.remove('visible');
             }
         }
 
         // Event Listeners
-        searchInput.addEventListener('input', () => {
-            searchMenu(searchInput.value);
-        });
+        searchInput.addEventListener('input', () => searchMenu(searchInput.value));
 
         categoryBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                const category = btn.dataset.category;
-                filterMenuByCategory(category);
-                searchInput.value = ''; // Clear search when changing category
+                filterMenuByCategory(btn.dataset.category);
+                searchInput.value = '';
             });
         });
 
