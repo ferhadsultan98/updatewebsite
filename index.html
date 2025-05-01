@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="az">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elegance - Restaurant Menu</title>
+    <title>Zəriflik - Restoran Menyusu</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     <style>
@@ -48,31 +48,49 @@
             padding: 20px;
         }
 
-        /* Header Styles */
-        header {
-            text-align: center;
-            padding: 40px 0;
-            position: relative;
+        /* Navbar Styles */
+        .navbar {
+            background-color: var(--card-bg-color);
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 20px;
         }
 
-        .logo {
-            font-size: 36px;
+        .navbarContainer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .navbarLogo {
+            font-size: 28px;
             font-weight: 700;
             color: var(--primary-color);
-            margin-bottom: 10px;
-            letter-spacing: 1px;
+            text-decoration: none;
         }
 
-        .tagline {
-            font-size: 18px;
-            color: var(--text-light-color);
-            margin-bottom: 30px;
+        .navbarMenu {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .navLink {
+            font-size: 16px;
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .navLink:hover {
+            color: var(--primary-color);
         }
 
         .themeToggle {
-            position: absolute;
-            top: 40px;
-            right: 20px;
             background: none;
             border: none;
             color: var(--text-color);
@@ -86,14 +104,20 @@
             transform: rotate(30deg);
         }
 
+        .hamburger {
+            display: none;
+            font-size: 24px;
+            color: var(--text-color);
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
         /* Slider Section */
         .sliderSection {
             position: relative;
             height: 100vh;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             background-color: var(--card-bg-color);
             margin-bottom: 60px;
         }
@@ -274,6 +298,13 @@
             transition: var(--transition);
             display: flex;
             flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .menuItem.hidden {
+            display: none;
         }
 
         .menuItem:hover {
@@ -309,8 +340,7 @@
         }
 
         .menuItemFooter {
-            display: flex;
-            justify-content: space-between;
+            display Seduction: space-between;
             align-items: center;
             margin-top: auto;
         }
@@ -331,6 +361,28 @@
             color: #fbbf24;
         }
 
+        .showMoreBtn {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 12px 24px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 20px;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: fadeIn 0.5s ease forwards 0.5s;
+        }
+
+        .showMoreBtn:hover {
+            background-color: var(--secondary-color);
+            transform: scale(1.05);
+        }
+
         .emptyResult {
             grid-column: 1 / -1;
             text-align: center;
@@ -345,7 +397,7 @@
 
         /* Footer Styles */
         footer {
-            padding: 60px 0;
+            padding: 60px 20px;
             margin-top: 80px;
             background-color: var(--card-bg-color);
             color: var(--text-light-color);
@@ -358,7 +410,6 @@
             gap: 40px;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
         }
 
         .footerSection h3 {
@@ -426,7 +477,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer centrality;
+            cursor: pointer;
             opacity: 0;
             visibility: hidden;
             transition: var(--transition);
@@ -446,6 +497,26 @@
 
         /* Responsive Design */
         @media (max-width: 768px) {
+            .navbarMenu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background-color: var(--card-bg-color);
+                padding: 20px;
+                box-shadow: var(--card-shadow);
+            }
+
+            .navbarMenu.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
             .sliderSection {
                 height: 70vh;
             }
@@ -464,23 +535,6 @@
 
             .menuSection {
                 grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-
-            .logo {
-                font-size: 28px;
-            }
-
-            .tagline {
-                font-size: 16px;
-            }
-
-            .searchInput {
-                padding: 10px 16px;
-            }
-
-            .themeToggle {
-                top: 30px;
-                right: 10px;
             }
 
             .scrollTopBtn {
@@ -531,9 +585,8 @@
                 font-size: 12px;
             }
 
-            .themeToggle {
-                top: 20px;
-                right: 10px;
+            .navbarLogo {
+                font-size: 24px;
             }
         }
 
@@ -548,35 +601,48 @@
                 transform: translateY(0);
             }
         }
-
-        .menuItem {
-            animation: fadeIn 0.5s ease forwards;
-        }
     </style>
 </head>
 <body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbarContainer">
+            <a href="#home" class="navbarLogo">Zəriflik</a>
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="navbarMenu" id="navbarMenu">
+                <a href="#home" class="navLink">Ana Səhifə</a>
+                <a href="#menu" class="navLink">Menyu</a>
+                <button class="themeToggle" id="themeToggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
     <!-- Home Section with Slider -->
     <section class="sliderSection" id="home">
         <div class="slider">
             <div class="slide">
-                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4" alt="Restaurant Interior">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4" alt="Restoran Daxili">
                 <div class="sliderOverlay">
-                    <h2>Welcome to Elegance</h2>
-                    <p>Indulge in an exquisite culinary experience crafted with passion.</p>
+                    <h2>Zərifliyə Xoş Gəlmisiniz</h2>
+                    <p>Ehtirasla hazırlanmış incə kulinariya təcrübəsindən zövq alın.</p>
                 </div>
             </div>
             <div class="slide">
-                <img src="https://images.unsplash.com/photo-1504672281656-e3e7b0afebab" alt="Gourmet Dish">
+                <img src="https://images.unsplash.com/photo-1504672281656-e3e7b0afebab" alt="Gurme Yemək">
                 <div class="sliderOverlay">
-                    <h2>Savor the Flavor</h2>
-                    <p>Discover our signature dishes made with the finest ingredients.</p>
+                    <h2>Ləzzəti Hiss Edin</h2>
+                    <p>Ən yaxşı inqrediyentlərlə hazırlanmış xüsusi yeməklərimizi kəşf edin.</p>
                 </div>
             </div>
             <div class="slide">
-                <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae" alt="Dining Experience">
+                <img src="https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae" alt="Yemək Təcrübəsi">
                 <div class="sliderOverlay">
-                    <h2>Unforgettable Moments</h2>
-                    <p>Enjoy a dining experience that delights all your senses.</p>
+                    <h2>Unudulmaz Anlar</h2>
+                    <p>Bütün hisslərinizi sevindirən yemək təcrübəsindən həzz alın.</p>
                 </div>
             </div>
         </div>
@@ -584,34 +650,26 @@
 
     <!-- Menu Section -->
     <div class="container" id="menu">
-        <header>
-            <div class="logo" data-aos="fade-down">Elegance</div>
-            <div class="tagline" data-aos="fade-up">Exquisite Culinary Experience</div>
-            <button class="themeToggle" id="themeToggle" data-aos="fade-left">
-                <i class="fas fa-moon"></i>
-            </button>
-        </header>
-
         <div class="searchContainer" data-aos="fade-up">
-            <input type="text" class="searchInput" id="searchInput" placeholder="Search for dishes, ingredients...">
+            <input type="text" class="searchInput" id="searchInput" placeholder="Yeməklər, inqrediyentlər axtar...">
             <div class="categoriesContainer" id="categoriesContainer">
-                <button class="categoryBtn active" data-category="all">All</button>
-                <button class="categoryBtn" data-category="appetizers">Appetizers</button>
-                <button class="categoryBtn" data-category="soups">Soups</button>
-                <button class="categoryBtn" data-category="salads">Salads</button>
+                <button class="categoryBtn active" data-category="all">Hamısı</button>
+                <button class="categoryBtn" data-category="appetizers">Aperativlər</button>
+                <button class="categoryBtn" data-category="soups">Şorbalar</button>
+                <button class="categoryBtn" data-category="salads">Salatlar</button>
                 <button class="categoryBtn" data-category="pasta">Pasta</button>
-                <button class="categoryBtn" data-category="seafood">Seafood</button>
-                <button class="categoryBtn" data-category="steaks">Steaks</button>
+                <button class="categoryBtn" data-category="seafood">Dəniz Məhsulları</button>
+                <button class="categoryBtn" data-category="steaks">Biftek</button>
                 <button class="categoryBtn" data-category="pizza">Pizza</button>
-                <button class="categoryBtn" data-category="desserts">Desserts</button>
-                <button class="categoryBtn" data-category="beverages">Beverages</button>
-                <button class="categoryBtn" data-category="specialties">Specialties</button>
+                <button class="categoryBtn" data-category="desserts">Desertlər</button>
+                <button class="categoryBtn" data-category="beverages">İçkilər</button>
+                <button class="categoryBtn" data-category="specialties">Xüsusi Yeməklər</button>
             </div>
         </div>
 
         <div class="menuContainer" id="menuContainer">
             <div class="emptyResult" id="emptyResult">
-                No menu items match your search. Please try different keywords.
+                Axtarışınıza uyğun yemək tapılmadı. Fərqli açar sözlər sınayın.
             </div>
         </div>
     </div>
@@ -620,17 +678,17 @@
     <footer>
         <div class="footerContainer">
             <div class="footerSection">
-                <h3>About Elegance</h3>
-                <p>Elegance Restaurant offers a unique dining experience with a focus on fresh, high-quality ingredients and exceptional service.</p>
+                <h3>Zəriflik Haqqında</h3>
+                <p>Zəriflik Restoranı təzə, yüksək keyfiyyətli inqrediyentlərə və müstəsna xidmətə diqqət yetirərək unikal yemək təcrübəsi təklif edir.</p>
             </div>
             <div class="footerSection">
-                <h3>Contact Us</h3>
-                <p><a href="mailto:info@elegancerestaurant.com">info@elegancerestaurant.com</a></p>
-                <p><a href="tel:+1234567890">+1 (234) 567-890</a></p>
-                <p>123 Gourmet Street, Food City</p>
+                <h3>Bizimlə Əlaqə</h3>
+                <p><a href="mailto:info@zeriflikrestoran.az">info@zeriflikrestoran.az</a></p>
+                <p><a href="tel:+994123456789">+994 (12) 345-67-89</a></p>
+                <p>Gurme Küçəsi 123, Bakı</p>
             </div>
             <div class="footerSection">
-                <h3>Follow Us</h3>
+                <h3>Bizi İzləyin</h3>
                 <div class="socialIcons">
                     <a href="#"><i class="fab fa-facebook-f"></i></a>
                     <a href="#"><i class="fab fa-instagram"></i></a>
@@ -639,7 +697,7 @@
             </div>
         </div>
         <div class="footerBottom">
-            <p>© 2025 Elegance Restaurant. All rights reserved.</p>
+            <p>© 2025 Zəriflik Restoranı. Bütün hüquqlar qorunur.</p>
         </div>
     </footer>
 
@@ -657,477 +715,77 @@
             once: true
         });
 
-        // Restaurant menu data (same as provided)
+        // Restaurant menu data
         const menuData = {
             appetizers: [
-                {
-                    id: 'app1',
-                    name: 'Bruschetta Classica',
-                    description: 'Fresh tomatoes, basil, garlic and olive oil on toasted artisan bread',
-                    price: 12.95,
-                    rating: 4.8,
-                    image: '/api/placeholder/400/300',
-                    category: 'appetizers'
-                },
-                {
-                    id: 'app2',
-                    name: 'Arancini',
-                    description: 'Crispy fried risotto balls filled with mozzarella, peas, and ground beef',
-                    price: 14.50,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'appetizers'
-                },
-                {
-                    id: 'app3',
-                    name: 'Calamari Fritti',
-                    description: 'Lightly breaded and fried squid served with lemon aioli',
-                    price: 16.95,
-                    rating: 4.6,
-                    image: '/api/placeholder/400/300',
-                    category: 'appetizers'
-                },
-                {
-                    id: 'app4',
-                    name: 'Antipasto Platter',
-                    description: 'Selection of Italian cured meats, cheeses, olives, and marinated vegetables',
-                    price: 24.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'appetizers'
-                },
-                {
-                    id: 'app5',
-                    name: 'Truffle Fries',
-                    description: 'Crispy fries tossed in truffle oil, parmesan, and herbs',
-                    price: 10.95,
-                    rating: 4.5,
-                    image: '/api/placeholder/400/300',
-                    category: 'appetizers'
-                }
+                { id: 'app1', name: 'Klassik Bruschetta', description: 'Təzə pomidor, reyhan, sarımsaq və zeytun yağı ilə qızardılmış çörək', price: 12.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'appetizers' },
+                { id: 'app2', name: 'Arancini', description: 'Mozzarella, noxud və qiymə ilə doldurulmuş xırt-xırt qızardılmış risotto topları', price: 14.50, rating: 4.7, image: '/api/placeholder/400/300', category: 'appetizers' },
+                { id: 'app3', name: 'Qızardılmış Kalamar', description: 'Limon aioli ilə yüngül çörəkli və qızardılmış kalamar', price: 16.95, rating: 4.6, image: '/api/placeholder/400/300', category: 'appetizers' },
+                { id: 'app4', name: 'Antipasto Tabağı', description: 'İtalyan quru ətləri, pendirlər, zeytun və marinadlanmış tərəvəzlər seçimi', price: 24.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'appetizers' },
+                { id: 'app5', name: 'Trüflü Kartof', description: 'Trüf yağı, parmesan və otlarla qarışdırılmış xırt-xırt kartof', price: 10.95, rating: 4.5, image: '/api/placeholder/400/300', category: 'appetizers' }
             ],
             soups: [
-                {
-                    id: 'soup1',
-                    name: 'Zuppa di Pomodoro',
-                    description: 'Rich tomato soup with fresh basil and a touch of cream',
-                    price: 9.95,
-                    rating: 4.6,
-                    image: '/api/placeholder/400/300',
-                    category: 'soups'
-                },
-                {
-                    id: 'soup2',
-                    name: 'Minestrone',
-                    description: 'Classic Italian vegetable soup with beans, pasta, and fresh herbs',
-                    price: 10.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'soups'
-                },
-                {
-                    id: 'soup3',
-                    name: 'Lobster Bisque',
-                    description: 'Creamy lobster soup with a touch of brandy and fresh herbs',
-                    price: 15.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'soups'
-                },
-                {
-                    id: 'soup4',
-                    name: 'French Onion Soup',
-                    description: 'Caramelized onions in rich beef broth topped with gruyère cheese',
-                    price: 12.95,
-                    rating: 4.8,
-                    image: '/api/placeholder/400/300',
-                    category: 'soups'
-                },
-                {
-                    id: 'soup5',
-                    name: 'Mushroom Velouté',
-                    description: 'Silky smooth wild mushroom soup with truffle oil and crème fraîche',
-                    price: 13.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'soups'
-                }
+                { id: 'soup1', name: 'Pomidor Şorbası', description: 'Təzə reyhan və bir az qaymaq ilə zəngin pomidor şorbası', price: 9.95, rating: 4.6, image: '/api/placeholder/400/300', category: 'soups' },
+                { id: 'soup2', name: 'Minestrone', description: 'Fasulye, makaron və təzə otlarla klassik İtalyan tərəvəz şorbası', price: 10.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'soups' },
+                { id: 'soup3', name: 'Omar Şorbası', description: 'Bir az brendi və təzə otlarla qaymaqlı omar şorbası', price: 15.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'soups' },
+                { id: 'soup4', name: 'Fransız Soğan Şorbası', description: 'Gruyère pendiri ilə zəngin mal əti bulyonunda karamelizə edilmiş soğan', price: 12.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'soups' },
+                { id: 'soup5', name: 'Göbələk Velouté', description: 'Trüf yağı və crème fraîche ilə ipək kimi hamar vəhşi göbələk şorbası', price: 13.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'soups' }
             ],
             salads: [
-                {
-                    id: 'salad1',
-                    name: 'Caesar Salad',
-                    description: 'Crisp romaine lettuce with housemade dressing, croutons, and parmesan',
-                    price: 12.95,
-                    rating: 4.5,
-                    image: '/api/placeholder/400/300',
-                    category: 'salads'
-                },
-                {
-                    id: 'salad2',
-                    name: 'Mediterranean Salad',
-                    description: 'Mixed greens with cucumber, tomato, olives, feta, and red onion',
-                    price: 14.95,
-                    rating: 4.6,
-                    image: '/api/placeholder/400/300',
-                    category: 'salads'
-                },
-                {
-                    id: 'salad3',
-                    name: 'Caprese Salad',
-                    description: 'Fresh mozzarella, tomato, and basil drizzled with balsamic reduction',
-                    price: 15.95,
-                    rating: 4.8,
-                    image: '/api/placeholder/400/300',
-                    category: 'salads'
-                },
-                {
-                    id: 'salad4',
-                    name: 'Quinoa Spinach Salad',
-                    description: 'Baby spinach with quinoa, dried cranberries, walnuts, and feta cheese',
-                    price: 15.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'salads'
-                },
-                {
-                    id: 'salad5',
-                    name: 'Roasted Beet Salad',
-                    description: 'Mixed greens with roasted beets, goat cheese, candied walnuts, and citrus vinaigrette',
-                    price: 16.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'salads'
-                }
+                { id: 'salad1', name: 'Sezar Salatı', description: 'Evdə hazırlanmış sarğı, kruton və parmesan ilə xırt-xırt romaine kahı', price: 12.95, rating: 4.5, image: '/api/placeholder/400/300', category: 'salads' },
+                { id: 'salad2', name: 'Aralıq Dənizi Salatı', description: 'Xiyar, pomidor, zeytun, feta və qırmızı soğan ilə qarışıq göyərtilər', price: 14.95, rating: 4.6, image: '/api/placeholder/400/300', category: 'salads' },
+                { id: 'salad3', name: 'Kapreze Salatı', description: 'Balsamik reduksiyası ilə təzə mozzarella, pomidor və reyhan', price: 15.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'salads' },
+                { id: 'salad4', name: 'Kinoa İspanaq Salatı', description: 'Quru zoğal, qoz və feta pendiri ilə körpə ispanaq', price: 15.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'salads' },
+                { id: 'salad5', name: 'Qovrulmuş Çuğundur Salatı', description: 'Qovrulmuş çuğundur, keçi pendiri, şəkərli qoz və sitrus vinaigrette ilə qarışıq göyərtilər', price: 16.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'salads' }
             ],
             pasta: [
-                {
-                    id: 'pasta1',
-                    name: 'Spaghetti Carbonara',
-                    description: 'Classic Roman dish with pancetta, egg, pecorino, and black pepper',
-                    price: 18.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'pasta'
-                },
-                {
-                    id: 'pasta2',
-                    name: 'Fettuccine Alfredo',
-                    description: 'Handmade fettuccine in a rich parmesan cream sauce',
-                    price: 17.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'pasta'
-                },
-                {
-                    id: 'pasta3',
-                    name: 'Penne Arrabbiata',
-                    description: 'Spicy tomato sauce with garlic, chili flakes, and fresh herbs',
-                    price: 16.95,
-                    rating: 4.5,
-                    image: '/api/placeholder/400/300',
-                    category: 'pasta'
-                },
-                {
-                    id: 'pasta4',
-                    name: 'Lobster Ravioli',
-                    description: 'Handmade ravioli filled with lobster meat in a saffron cream sauce',
-                    price: 24.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'pasta'
-                },
-                {
-                    id: 'pasta5',
-                    name: 'Tagliatelle Bolognese',
-                    description: 'Traditional slow-cooked meat sauce with fresh tagliatelle pasta',
-                    price: 19.95,
-                    rating: 4.8,
-                    image: '/api/placeholder/400/300',
-                    category: 'pasta'
-                }
+                { id: 'pasta1', name: 'Spagetti Karbonara', description: 'Pancetta, yumurta, pecorino və qara bibər ilə klassik Roma yeməyi', price: 18.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'pasta' },
+                { id: 'pasta2', name: 'Fettuccine Alfredo', description: 'Zəngin parmesan qaymaq sousunda əl işi fettuccine', price: 17.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'pasta' },
+                { id: 'pasta3', name: 'Penne Arrabbiata', description: 'Sarımsaq, çili ləpələri və təzə otlarla ədviyyəli pomidor sousu', price: 16.95, rating: 4.5, image: '/api/placeholder/400/300', category: 'pasta' },
+                { id: 'pasta4', name: 'Omar Ravioli', description: 'Zəfəran qaymaq sousunda omar əti ilə doldurulmuş əl işi ravioli', price: 24.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'pasta' },
+                { id: 'pasta5', name: 'Tagliatelle Bolognese', description: 'Təzə tagliatelle pasta ilə ənənəvi yavaş bişirilmiş ət sousu', price: 19.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'pasta' }
             ],
             seafood: [
-                {
-                    id: 'seafood1',
-                    name: 'Grilled Salmon',
-                    description: 'Fresh Atlantic salmon with lemon herb butter and seasonal vegetables',
-                    price: 28.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'seafood'
-                },
-                {
-                    id: 'seafood2',
-                    name: 'Lobster Thermidor',
-                    description: 'Baked lobster with creamy brandy sauce and Gruyère cheese',
-                    price: 42.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'seafood'
-                },
-                {
-                    id: 'seafood3',
-                    name: 'Cioppino',
-                    description: 'San Francisco-style seafood stew with mussels, clams, shrimp, and fish',
-                    price: 32.95,
-                    rating: 4.8,
-                    image: '/api/placeholder/400/300',
-                    category: 'seafood'
-                },
-                {
-                    id: 'seafood4',
-                    name: 'Pan-Seared Scallops',
-                    description: 'Jumbo sea scallops with cauliflower purée and crispy pancetta',
-                    price: 34.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'seafood'
-                },
-                {
-                    id: 'seafood5',
-                    name: 'Grilled Octopus',
-                    description: 'Tender octopus with chorizo, potatoes, and smoked paprika oil',
-                    price: 29.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'seafood'
-                }
+                { id: 'seafood1', name: 'Qızardılmış Somon', description: 'Limon otlu yağ və mövsümi tərəvəzlərlə təzə Atlantik somonu', price: 28.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'seafood' },
+                { id: 'seafood2', name: 'Omar Termidor', description: 'Qaymaqlı brendi sousu və Gruyère pendiri ilə bişmiş omar', price: 42.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'seafood' },
+                { id: 'seafood3', name: 'Cioppino', description: 'Midye, mollyusk, karides və balıq ilə San-Fransisko üslubunda dəniz məhsulları yahnisi', price: 32.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'seafood' },
+                { id: 'seafood4', name: 'Qızardılmış Dəniz Tarağı', description: 'Gül kələm püresi və xırt-xırt pancetta ilə iri dəniz tarağı', price: 34.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'seafood' },
+                { id: 'seafood5', name: 'Qızardılmış Ahtapot', description: 'Xoriço, kartof və hisə verilmiş paprika yağı ilə yumşaq ahtapot', price: 29.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'seafood' }
             ],
             steaks: [
-                {
-                    id: 'steak1',
-                    name: 'Filet Mignon',
-                    description: '8oz center-cut filet with red wine reduction and truffle butter',
-                    price: 42.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'steaks'
-                },
-                {
-                    id: 'steak2',
-                    name: 'Ribeye',
-                    description: '14oz prime ribeye with garlic herb butter and roasted potatoes',
-                    price: 39.95,
-                    rating: 4.8,
-                    image: '/api/placeholder/400/300',
-                    category: 'steaks'
-                },
-                {
-                    id: 'steak3',
-                    name: 'New York Strip',
-                    description: '12oz strip steak with peppercorn sauce and crispy onions',
-                    price: 36.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'steaks'
-                },
-                {
-                    id: 'steak4',
-                    name: 'Tomahawk',
-                    description: '32oz bone-in ribeye for two with choice of two sides',
-                    price: 89.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'steaks'
-                },
-                {
-                    id: 'steak5',
-                    name: 'Wagyu Flat Iron',
-                    description: '8oz American Wagyu flat iron with chimichurri sauce',
-                    price: 48.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'steaks'
-                }
+                { id: 'steak1', name: 'File Minyon', description: 'Qırmızı şərab reduksiyası və trüflü yağ ilə 8 oz mərkəzi kəsilmiş file', price: 42.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'steaks' },
+                { id: 'steak2', name: 'Ribay', description: 'Sarımsaq otlu yağ və qovrulmuş kartof ilə 14 oz əsas ribay', price: 39.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'steaks' },
+                { id: 'steak3', name: 'Nyu-York Strip', description: 'Bibər sousu və xırt-xırt soğan ilə 12 oz strip biftek', price: 36.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'steaks' },
+                { id: 'steak4', name: 'Tomahawk', description: 'İki nəfərlik 32 oz sümıklı ribay, iki yan yemək seçimi ilə', price: 89.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'steaks' },
+                { id: 'steak5', name: 'Vagyu Flat Iron', description: 'Çimiçurri sousu ilə 8 oz Amerika Vagyu flat iron', price: 48.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'steaks' }
             ],
             pizza: [
-                {
-                    id: 'pizza1',
-                    name: 'Margherita',
-                    description: 'San Marzano tomato sauce, fresh mozzarella, and basil',
-                    price: 16.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'pizza'
-                },
-                {
-                    id: 'pizza2',
-                    name: 'Quattro Formaggi',
-                    description: 'Four cheese pizza with mozzarella, gorgonzola, ricotta, and parmesan',
-                    price: 18.95,
-                    rating: 4.8,
-                    image: '/api/placeholder/400/300',
-                    category: 'pizza'
-                },
-                {
-                    id: 'pizza3',
-                    name: 'Diavola',
-                    description: 'Spicy salami, roasted red peppers, and chili flakes',
-                    price: 19.95,
-                    rating: 4.6,
-                    image: '/api/placeholder/400/300',
-                    category: 'pizza'
-                },
-                {
-                    id: 'pizza4',
-                    name: 'Prosciutto e Funghi',
-                    description: 'Prosciutto di Parma, wild mushrooms, and truffle oil',
-                    price: 21.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'pizza'
-                },
-                {
-                    id: 'pizza5',
-                    name: 'Mediterranean',
-                    description: 'Artichokes, olives, feta cheese, and sun-dried tomatoes',
-                    price: 19.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'pizza'
-                }
+                { id: 'pizza1', name: 'Marqarita', description: 'San Marzano pomidor sousu, təzə mozzarella və reyhan', price: 16.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'pizza' },
+                { id: 'pizza2', name: 'Dörd Pendir', description: 'Mozzarella, qorqonzola, rikotta və parmesan ilə dörd pendirli pizza', price: 18.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'pizza' },
+                { id: 'pizza3', name: 'Diavola', description: 'Ədviyyəli salami, qovrulmuş qırmızı bibər və çili ləpələri', price: 19.95, rating: 4.6, image: '/api/placeholder/400/300', category: 'pizza' },
+                { id: 'pizza4', name: 'Proşutto və Göbələk', description: 'Parma proşuttosu, vəhşi göbələklər və trüf yağı', price: 21.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'pizza' },
+                { id: 'pizza5', name: 'Aralıq Dənizi', description: 'Artışok, zeytun, feta pendiri və günəşdə qurudulmuş pomidor', price: 19.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'pizza' }
             ],
             desserts: [
-                {
-                    id: 'dessert1',
-                    name: 'Tiramisu',
-                    description: 'Classic Italian dessert with coffee-soaked ladyfingers and mascarpone cream',
-                    price: 9.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'desserts'
-                },
-                {
-                    id: 'dessert2',
-                    name: 'Molten Chocolate Cake',
-                    description: 'Warm chocolate cake with liquid center and vanilla bean ice cream',
-                    price: 10.95,
-                    rating: 4.8,
-                    image: '/api/placeholder/400/300',
-                    category: 'desserts'
-                },
-                {
-                    id: 'dessert3',
-                    name: 'Crème Brûlée',
-                    description: 'Rich vanilla custard with caramelized sugar crust',
-                    price: 9.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'desserts'
-                },
-                {
-                    id: 'dessert4',
-                    name: 'New York Cheesecake',
-                    description: 'Creamy cheesecake with graham cracker crust and berry compote',
-                    price: 10.95,
-                    rating: 4.6,
-                    image: '/api/placeholder/400/300',
-                    category: 'desserts'
-                },
-                {
-                    id: 'dessert5',
-                    name: 'Gelato Selection',
-                    description: 'Three scoops of housemade gelato with biscotti',
-                    price: 8.95,
-                    rating: 4.5,
-                    image: '/api/placeholder/400/300',
-                    category: 'desserts'
-                }
+                { id: 'dessert1', name: 'Tiramisu', description: 'Qəhvəyə batırılmış biskvitlər və maskarpone kremi ilə klassik İtalyan deserti', price: 9.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'desserts' },
+                { id: 'dessert2', name: 'Əriyən Şokolad Keks', description: 'Vanil dondurması ilə maye mərkəzli isti şokolad keks', price: 10.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'desserts' },
+                { id: 'dessert3', name: 'Krem Brüle', description: 'Karamelizə edilmiş şəkər qabığı ilə zəngin vanil kremi', price: 9.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'desserts' },
+                { id: 'dessert4', name: 'Nyu-York Çizkeyk', description: 'Qrem kraker qabığı və giləmeyvə kompotu ilə qaymaqlı çizkeyk', price: 10.95, rating: 4.6, image: '/api/placeholder/400/300', category: 'desserts' },
+                { id: 'dessert5', name: 'Gelato Seçimi', description: 'Biskviti ilə evdə hazırlanmış üç kürə gelato', price: 8.95, rating: 4.5, image: '/api/placeholder/400/300', category: 'desserts' }
             ],
             beverages: [
-                {
-                    id: 'bev1',
-                    name: 'Signature Cocktails',
-                    description: 'Selection of house specialty cocktails crafted by our mixologists',
-                    price: 14.95,
-                    rating: 4.8,
-                    image: '/api/placeholder/400/300',
-                    category: 'beverages'
-                },
-                {
-                    id: 'bev2',
-                    name: 'Italian Wine Collection',
-                    description: 'Curated selection of fine Italian wines by the glass',
-                    price: 12.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'beverages'
-                },
-                {
-                    id: 'bev3',
-                    name: 'Craft Beer Selection',
-                    description: 'Local and imported craft beers on tap and bottled',
-                    price: 8.95,
-                    rating: 4.6,
-                    image: '/api/placeholder/400/300',
-                    category: 'beverages'
-                },
-                {
-                    id: 'bev4',
-                    name: 'Artisanal Coffee',
-                    description: 'Freshly roasted coffee prepared in various methods',
-                    price: 5.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'beverages'
-                },
-                {
-                    id: 'bev5',
-                    name: 'Fresh Pressed Juices',
-                    description: 'Selection of seasonal fruits juiced to order',
-                    price: 7.95,
-                    rating: 4.5,
-                    image: '/api/placeholder/400/300',
-                    category: 'beverages'
-                }
+                { id: 'bev1', name: 'Xüsusi Kokteyllər', description: 'Miksoloqlarımız tərəfindən hazırlanmış evin xüsusi kokteylləri', price: 14.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'beverages' },
+                { id: 'bev2', name: 'İtalyan Şərab Kolleksiyası', description: 'Stəkanda təqdim olunan incə İtalyan şərabları seçimi', price: 12.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'beverages' },
+                { id: 'bev3', name: 'Sənətkar Pivə Seçimi', description: 'Yerli və idxal edilmiş sənətkar pivələr', price: 8.95, rating: 4.6, image: '/api/placeholder/400/300', category: 'beverages' },
+                { id: 'bev4', name: 'Sənətkar Qəhvə', description: 'Müxtəlif üsullarla hazırlanmış təzə qovrulmuş qəhvə', price: 5.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'beverages' },
+                { id: 'bev5', name: 'Təzə Sıxılmış Şirələr', description: 'Sifarişə uyğun sıxılmış mövsümi meyvə şirələri', price: 7.95, rating: 4.5, image: '/api/placeholder/400/300', category: 'beverages' }
             ],
             specialties: [
-                {
-                    id: 'spec1',
-                    name: 'Osso Buco',
-                    description: 'Braised veal shanks with gremolata and saffron risotto',
-                    price: 36.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'specialties'
-                },
-                {
-                    id: 'spec2',
-                    name: 'Truffle Risotto',
-                    description: 'Creamy Arborio rice with shaved black truffle and aged parmesan',
-                    price: 32.95,
-                    rating: 4.8,
-                    image: '/api/placeholder/400/300',
-                    category: 'specialties'
-                },
-                {
-                    id: 'spec3',
-                    name: 'Duck Confit',
-                    description: 'Slow-cooked duck leg with cherry reduction and potato purée',
-                    price: 34.95,
-                    rating: 4.7,
-                    image: '/api/placeholder/400/300',
-                    category: 'specialties'
-                },
-                {
-                    id: 'spec4',
-                    name: 'Beef Wellington',
-                    description: 'Tenderloin wrapped in mushroom duxelles and puff pastry',
-                    price: 42.95,
-                    rating: 4.9,
-                    image: '/api/placeholder/400/300',
-                    category: 'specialties'
-                },
-                {
-                    id: 'spec5',
-                    name: 'Seafood Paella',
-                    description: 'Spanish rice dish with assorted seafood, saffron, and chorizo',
-                    price: 38.95,
-                    rating: 4.8,
-                    image: '/api/placeholder/400/300',
-                    category: 'specialties'
-                }
+                { id: 'spec1', name: 'Osso Buko', description: 'Gremolata və zəfəran risotto ilə bişirilmiş dana baldırı', price: 36.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'specialties' },
+                { id: 'spec2', name: 'Trüflü Risotto', description: 'Qara trüf və yaşlı parmesan ilə qaymaqlı Arborio düyü', price: 32.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'specialties' },
+                { id: 'spec3', name: 'Ördək Konfit', description: 'Albalı reduksiyası və kartof püresi ilə yavaş bişirilmiş ördək budu', price: 34.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'specialties' },
+                { id: 'spec4', name: 'Bif Vellinqton', description: 'Göbələk duxelles və xəmir qabığında bükülmüş tenderloin', price: 42.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'specialties' },
+                { id: 'spec5', name: 'Dəniz Məhsulları Paella', description: 'Müxtəlif dəniz məhsulları, zəfəran və xoriço ilə İspan düyü yeməyi', price: 38.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'specialties' }
             ]
         };
 
@@ -1138,6 +796,15 @@
         const emptyResult = document.getElementById('emptyResult');
         const themeToggle = document.getElementById('themeToggle');
         const scrollTopBtn = document.getElementById('scrollTopBtn');
+        const hamburger = document.getElementById('hamburger');
+        const navbarMenu = document.getElementById('navbarMenu');
+
+        // Hamburger Menu Toggle
+        hamburger.addEventListener('click', () => {
+            navbarMenu.classList.toggle('active');
+            hamburger.querySelector('i').classList.toggle('fa-bars');
+            hamburger.querySelector('i').classList.toggle('fa-times');
+        });
 
         // Slider Functionality
         const slides = document.querySelectorAll('.slide');
@@ -1154,7 +821,6 @@
             showSlide(currentSlide);
         }
 
-        // Auto-rotate slider every 5 seconds
         setInterval(nextSlide, 5000);
         showSlide(currentSlide);
 
@@ -1175,13 +841,39 @@
 
             const sectionTitle = document.createElement('h2');
             sectionTitle.className = 'sectionTitle';
-            sectionTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            sectionTitle.textContent = category === 'appetizers' ? 'Aperativlər' :
+                                      category === 'soups' ? 'Şorbalar' :
+                                      category === 'salads' ? 'Salatlar' :
+                                      category === 'pasta' ? 'Pasta' :
+                                      category === 'seafood' ? 'Dəniz Məhsulları' :
+                                      category === 'steaks' ? 'Biftek' :
+                                      category === 'pizza' ? 'Pizza' :
+                                      category === 'desserts' ? 'Desertlər' :
+                                      category === 'beverages' ? 'İçkilər' :
+                                      category === 'specialties' ? 'Xüsusi Yeməklər' : category;
             sectionDiv.appendChild(sectionTitle);
 
-            items.forEach(item => {
+            items.forEach((item, index) => {
                 const menuItemDiv = createMenuItem(item);
+                if (index > 4) {
+                    menuItemDiv.classList.add('hidden');
+                }
                 sectionDiv.appendChild(menuItemDiv);
             });
+
+            if (items.length > 5) {
+                const showMoreBtn = document.createElement('button');
+                showMoreBtn.className = 'showMoreBtn';
+                showMoreBtn.textContent = 'Daha Çox Göstər';
+                showMoreBtn.addEventListener('click', () => {
+                    sectionDiv.querySelectorAll('.menuItem.hidden').forEach(item => {
+                        item.classList.remove('hidden');
+                        item.style.animation = 'fadeIn 0.5s ease forwards';
+                    });
+                    showMoreBtn.style.display = 'none';
+                });
+                sectionDiv.appendChild(showMoreBtn);
+            }
 
             menuContainer.appendChild(sectionDiv);
         }
@@ -1199,7 +891,7 @@
                     <h3 class="menuItemTitle">${item.name}</h3>
                     <p class="menuItemDesc">${item.description}</p>
                     <div class="menuItemFooter">
-                        <div class="menuItemPrice">$${item.price.toFixed(2)}</div>
+                        <div class="menuItemPrice">${item.price.toFixed(2)} AZN</div>
                         <div class="menuItemRating">
                             ${getRatingStars(item.rating)}
                             <span>${item.rating.toFixed(1)}</span>
@@ -1233,19 +925,20 @@
         function filterMenuByCategory(category) {
             const sections = document.querySelectorAll('.menuSection');
 
-            if (category === 'all') {
-                sections.forEach(section => {
-                    section.classList.add('active');
+            sections.forEach(section => {
+                const items = section.querySelectorAll('.menuItem');
+                items.forEach((item, index) => {
+                    item.classList.toggle('hidden', index > 4 && category === section.dataset.category);
+                    item.style.display = 'flex';
                 });
-            } else {
-                sections.forEach(section => {
-                    if (section.dataset.category === category) {
-                        section.classList.add('active');
-                    } else {
-                        section.classList.remove('active');
-                    }
-                });
-            }
+
+                const showMoreBtn = section.querySelector('.showMoreBtn');
+                if (showMoreBtn) {
+                    showMoreBtn.style.display = items.length > 5 && category === section.dataset.category ? 'block' : 'none';
+                }
+
+                section.classList.toggle('active', category === 'all' || section.dataset.category === category);
+            });
 
             categoryBtns.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.category === category);
@@ -1266,6 +959,10 @@
 
             document.querySelectorAll('.menuSection').forEach(section => {
                 section.classList.remove('active');
+                const showMoreBtn = section.querySelector('.showMoreBtn');
+                if (showMoreBtn) {
+                    showMoreBtn.style.display = 'none';
+                }
             });
 
             for (const category in menuData) {
@@ -1286,6 +983,8 @@
                     const matchesName = item.name.toLowerCase().includes(query);
                     const matchesDesc = item.description.toLowerCase().includes(query);
 
+                    itemElement.classList.remove('hidden');
+
                     if (matchesName || matchesDesc) {
                         itemElement.style.display = 'flex';
                         sectionHasMatch = true;
@@ -1305,11 +1004,9 @@
 
         // Toggle Theme
         function toggleTheme() {
-            const body = document.body;
+            document.body.classList.toggle('darkMode');
             const icon = themeToggle.querySelector('i');
-
-            body.classList.toggle('darkMode');
-            icon.className = body.classList.contains('darkMode') ? 'fas fa-sun' : 'fas fa-moon';
+            icon.className = document.body.classList.contains('darkMode') ? 'fas fa-sun' : 'fas fa-moon';
         }
 
         // Scroll to Top
@@ -1323,9 +1020,7 @@
         // Check Scroll Position
         function checkScrollPosition() {
             const menuContainer = document.getElementById('menuContainer');
-            const scrollY = window.scrollY;
-
-            if (scrollY > 300) {
+            if (window.scrollY > 300) {
                 scrollTopBtn.classList.add('visible');
                 menuContainer.classList.add('visible');
             } else {
