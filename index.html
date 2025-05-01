@@ -50,17 +50,12 @@
 
         /* Navbar Styles */
         .navbar {
-            background-color: transparent;
+            
+            box-shadow: var(--card-shadow);
             position: sticky;
             top: 0;
             z-index: 100;
             padding: 15px 20px;
-            transition: var(--transition);
-        }
-
-        .navbar.scrolled {
-            background-color: var(--card-bg-color);
-            box-shadow: var(--card-shadow);
         }
 
         .navbarContainer {
@@ -611,7 +606,7 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar">
         <div class="navbarContainer">
             <a href="#home" class="navbarLogo">Zəriflik</a>
             <button class="hamburger" id="hamburger">
@@ -760,7 +755,7 @@
             ],
             steaks: [
                 { id: 'steak1', name: 'File Minyon', description: 'Qırmızı şərab reduksiyası və trüflü yağ ilə 8 oz mərkəzi kəsilmiş file', price: 42.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'steaks' },
-                { id: 'steak2', name: 'Ribay', description: 'Sarımsaq otlu yağ və qovrulmuş kartof ilə 14 oz əsas ribay', price: 39.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'steaks' },
+                { welcomes: 'steak2', name: 'Ribay', description: 'Sarımsaq otlu yağ və qovrulmuş kartof ilə 14 oz əsas ribay', price: 39.95, rating: 4.8, image: '/api/placeholder/400/300', category: 'steaks' },
                 { id: 'steak3', name: 'Nyu-York Strip', description: 'Bibər sousu və xırt-xırt soğan ilə 12 oz strip biftek', price: 36.95, rating: 4.7, image: '/api/placeholder/400/300', category: 'steaks' },
                 { id: 'steak4', name: 'Tomahawk', description: 'İki nəfərlik 32 oz sümıklı ribay, iki yan yemək seçimi ilə', price: 89.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'steaks' },
                 { id: 'steak5', name: 'Vagyu Flat Iron', description: 'Çimiçurri sousu ilə 8 oz Amerika Vagyu flat iron', price: 48.95, rating: 4.9, image: '/api/placeholder/400/300', category: 'steaks' }
@@ -796,7 +791,6 @@
         };
 
         // DOM Elements
-        const navbar = document.getElementById('navbar');
         const menuContainer = document.getElementById('menuContainer');
         const searchInput = document.getElementById('searchInput');
         const categoryBtns = document.querySelectorAll('.categoryBtn');
@@ -812,20 +806,6 @@
             hamburger.querySelector('i').classList.toggle('fa-bars');
             hamburger.querySelector('i').classList.toggle('fa-times');
         });
-
-        // Close Navbar on NavLink Click
-        document.querySelectorAll('.navLink').forEach(link => {
-            link.addEventListener('click', () => {
-                navbarMenu.classList.remove('active');
-                hamburger.querySelector('i').classList.add('fa-bars');
-                hamburger.querySelector('i').classList.remove('fa-times');
-            });
-        });
-
-        // Navbar Scroll Effect
-        function checkNavbarScroll() {
-            navbar.classList.toggle('scrolled', window.scrollY > 100);
-        }
 
         // Slider Functionality
         const slides = document.querySelectorAll('.slide');
@@ -850,7 +830,6 @@
             for (const category in menuData) {
                 createMenuSection(category, menuData[category]);
             }
-            addGlobalShowMoreButton();
             filterMenuByCategory('all');
         }
 
@@ -900,25 +879,6 @@
             menuContainer.appendChild(sectionDiv);
         }
 
-        // Add Global Show More Button for "All" Category
-        function addGlobalShowMoreButton() {
-            const totalItems = Object.values(menuData).reduce((sum, items) => sum + items.length, 0);
-            if (totalItems > 5) {
-                const globalShowMoreBtn = document.createElement('button');
-                globalShowMoreBtn.className = 'showMoreBtn';
-                globalShowMoreBtn.id = 'globalShowMoreBtn';
-                globalShowMoreBtn.textContent = 'Daha Çox Göstər';
-                globalShowMoreBtn.addEventListener('click', () => {
-                    document.querySelectorAll('.menuSection .menuItem.hidden').forEach(item => {
-                        item.classList.remove('hidden');
-                        item.style.animation = 'fadeIn 0.5s ease forwards';
-                    });
-                    globalShowMoreBtn.style.display = 'none';
-                });
-                menuContainer.appendChild(globalShowMoreBtn);
-            }
-        }
-
         // Create Menu Item
         function createMenuItem(item) {
             const itemDiv = document.createElement('div');
@@ -965,40 +925,71 @@
         // Filter Menu by Category
         function filterMenuByCategory(category) {
             const sections = document.querySelectorAll('.menuSection');
-            const globalShowMoreBtn = document.getElementById('globalShowMoreBtn');
+            let totalItems = 0;
 
-            if (category === 'all') {
-                sections.forEach(section => {
+            // Clear existing global show more button if any
+            const existingGlobalShowMore = document.querySelector('.globalShowMoreBtn');
+            if (existingGlobalShowMore) {
+                existingGlobalShowMore.remove();
+            }
+
+            sections.forEach(section => {
+                const items = section.querySelectorAll('.menuItem');
+                const showMoreBtn = section.querySelector('.showMoreBtn');
+                section.classList.remove('active');
+
+                items.forEach(item => {
+                    item.classList.remove('hidden');
+                    item.style.display = 'none';
+                });
+
+                if (showMoreBtn) {
+                    showMoreBtn.style.display = 'none';
+                }
+
+                if (category === 'all') {
                     section.classList.add('active');
-                    const items = section.querySelectorAll('.menuItem');
+                    totalItems += items.length;
                     items.forEach((item, index) => {
-                        item.classList.toggle('hidden', index > 4);
-                        item.style.display = 'flex';
+                        if (index <= 4) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.classList.add('hidden');
+                            item.style.display = 'none';
+                        }
                     });
-                    const showMoreBtn = section.querySelector('.showMoreBtn');
-                    if (showMoreBtn) {
-                        showMoreBtn.style.display = 'none';
+                } else if (section.dataset.category === category) {
+                    section.classList.add('active');
+                    items.forEach((item, index) => {
+                        if (index <= 4) {
+                            item.style.display = 'flex';
+                        } else {
+                            item.classList.add('hidden');
+                            item.style.display = 'none';
+                        }
+                    });
+                    if (showMoreBtn && items.length > 5) {
+                        showMoreBtn.style.display = 'block';
                     }
-                });
-                if (globalShowMoreBtn) {
-                    globalShowMoreBtn.style.display = 'block';
                 }
-            } else {
-                sections.forEach(section => {
-                    const items = section.querySelectorAll('.menuItem');
-                    items.forEach((item, index) => {
-                        item.classList.toggle('hidden', index > 4 && category === section.dataset.category);
-                        item.style.display = 'flex';
+            });
+
+            // Add global show more button for "all" category
+            if (category === 'all' && totalItems > 5) {
+                const globalShowMoreBtn = document.createElement('button');
+                globalShowMoreBtn.className = 'showMoreBtn globalShowMoreBtn';
+                globalShowMoreBtn.textContent = 'Daha Çox Göstər';
+                globalShowMoreBtn.addEventListener('click', () => {
+                    sections.forEach(section => {
+                        section.querySelectorAll('.menuItem.hidden').forEach(item => {
+                            item.classList.remove('hidden');
+                            item.style.display = 'flex';
+                            item.style.animation = 'fadeIn 0.5s ease forwards';
+                        });
                     });
-                    const showMoreBtn = section.querySelector('.showMoreBtn');
-                    if (showMoreBtn) {
-                        showMoreBtn.style.display = items.length > 5 && category === section.dataset.category ? 'block' : 'none';
-                    }
-                    section.classList.toggle('active', section.dataset.category === category);
-                });
-                if (globalShowMoreBtn) {
                     globalShowMoreBtn.style.display = 'none';
-                }
+                });
+                menuContainer.appendChild(globalShowMoreBtn);
             }
 
             categoryBtns.forEach(btn => {
@@ -1026,9 +1017,10 @@
                 }
             });
 
-            const globalShowMoreBtn = document.getElementById('globalShowMoreBtn');
+            // Remove global show more button during search
+            const globalShowMoreBtn = document.querySelector('.globalShowMoreBtn');
             if (globalShowMoreBtn) {
-                globalShowMoreBtn.style.display = 'none';
+                globalShowMoreBtn.remove();
             }
 
             for (const category in menuData) {
@@ -1092,7 +1084,6 @@
             } else {
                 scrollTopBtn.classList.remove('visible');
             }
-            checkNavbarScroll();
         }
 
         // Event Listeners
