@@ -1,226 +1,1113 @@
 <!DOCTYPE html>
-<html lang="az">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sayt Təmirdədir</title>
-<style>
-    /* Genel ayarlar ve arka plan */
-body {
-    margin: 0;
-    padding: 0;
-    background-color: #121212;
-    color: #00FF00;  /* Hacker stilinde yeşil renk */
-    font-family: 'Inter', sans-serif;  /* GitHub fontu */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: hidden;
-}
+    <title>Elegance - Restaurant Menu</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #f59e0b;
+            --secondary-color: #d97706;
+            --text-color: #374151;
+            --text-light-color: #6b7280;
+            --bg-color: #f9fafb;
+            --card-bg-color: #ffffff;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
 
-/* Tam ekran örtü (overlay) */
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
+        .darkMode {
+            --primary-color: #fbbf24;
+            --secondary-color: #f59e0b;
+            --text-color: #e5e7eb;
+            --text-light-color: #9ca3af;
+            --bg-color: #1f2937;
+            --card-bg-color: #111827;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+        }
 
-/* Konteyner stil */
-.container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 50px;
-    background: rgba(0, 0, 0, 0.8);
-    border-radius: 15px;
-    box-shadow: 0 4px 40px rgba(0, 0, 0, 0.9);
-    border: 3px solid #00FF00;  /* Yeşil kenarlık */
-    width: 80%;
-    max-width: 900px;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-/* Başlık ve açıklama */
-.title {
-    font-size: 3rem;
-    font-weight: bold;
-    color: #00FF00;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-    animation: titleGlow 1.5s infinite alternate;
-}
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+            min-height: 100vh;
+        }
 
-.description {
-    font-size: 1.5rem;
-    color: #fff;
-    margin-bottom: 20px;
-}
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
-/* Glitch animasyonu için metin */
-.glitch-text p {
-    font-size: 2rem;
-    color: #00FF00;
-    font-family: 'Courier New', Courier, monospace;
-    position: relative;
-    display: inline-block;
-    animation: glitch 2s infinite;
-}
+        header {
+            text-align: center;
+            padding: 40px 0;
+            position: relative;
+        }
 
-@keyframes glitch {
-    0% {
-        opacity: 0.1;
-        transform: translateX(0);
-    }
-    25% {
-        opacity: 1;
-        transform: translateX(-5px);
-    }
-    50% {
-        opacity: 0.5;
-        transform: translateX(5px);
-    }
-    75% {
-        opacity: 1;
-        transform: translateX(-5px);
-    }
-    100% {
-        opacity: 0.1;
-        transform: translateX(5px);
-    }
-}
+        .logo {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
 
-/* İmlec animasyonu */
-@keyframes cursorBlink {
-    0% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
-}
+        .tagline {
+            font-size: 18px;
+            color: var(--text-light-color);
+            margin-bottom: 30px;
+        }
 
-.cursor {
-    width: 10px;
-    height: 30px;
-    background-color: #00FF00;
-    display: inline-block;
-    animation: cursorBlink 1s infinite;
-    margin-top: 20px;
-}
+        .themeToggle {
+            position: absolute;
+            top: 40px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            font-size: 24px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
 
-/* Sosyal medya bağlantıları */
-.social-links {
-    margin-top: 30px;
-    text-align: center;
-}
+        .themeToggle:hover {
+            color: var(--primary-color);
+            transform: rotate(30deg);
+        }
 
-.social-links p {
-    font-size: 1.5rem;
-    color: #fff;
-}
+        .searchContainer {
+            margin-bottom: 40px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
 
-.social-links .social-icon {
-    display: inline-block;
-    margin: 10px;
-    padding: 10px 20px;
-    font-size: 1.5rem;
-    color: #00FF00;
-    background-color: #000;
-    border-radius: 5px;
-    text-decoration: none;
-    border: 2px solid #00FF00;
-    transition: all 0.3s ease;
-}
+        .searchInput {
+            padding: 12px 20px;
+            border: 2px solid var(--text-light-color);
+            border-radius: 50px;
+            font-size: 16px;
+            width: 100%;
+            background-color: var(--card-bg-color);
+            color: var(--text-color);
+            transition: var(--transition);
+        }
 
-.social-links .social-icon:hover {
-    background-color: #00FF00;
-    color: #000;
-    border-color: #000;
-}
+        .searchInput:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.3);
+        }
 
-/* Link parlaması */
-a {
-    color: #00FF00;
-    text-decoration: none;
-    font-size: 1.2rem;
-    animation: linkGlow 1.5s infinite alternate;
-}
+        .categoriesContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+            justify-content: center;
+        }
 
-@keyframes linkGlow {
-    0% {
-        text-shadow: 0 0 5px #00FF00, 0 0 10px #00FF00, 0 0 20px #00FF00;
-    }
-    100% {
-        text-shadow: 0 0 15px #00FF00, 0 0 30px #00FF00, 0 0 50px #00FF00;
-    }
-}
+        .categoryBtn {
+            padding: 8px 20px;
+            background-color: var(--card-bg-color);
+            color: var(--text-color);
+            border: 1px solid var(--text-light-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 14px;
+        }
 
-</style>
-    <!-- Font Awesome ikonu için ekleme -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- GitHub Fontu için Google Fonts'tan 'Inter' fontu -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+        .categoryBtn:hover, .categoryBtn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+
+        .menuContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .menuSection {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+            width: 100%;
+        }
+
+        .menuSection.active {
+            display: grid;
+        }
+
+        .sectionTitle {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: var(--primary-color);
+            grid-column: 1 / -1;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .sectionTitle::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
+        .menuItem {
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menuItem:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .menuItemImg {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .menuItemContent {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .menuItemTitle {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--text-color);
+        }
+
+        .menuItemDesc {
+            font-size: 14px;
+            color: var(--text-light-color);
+            margin-bottom: 15px;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .menuItemFooter {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .menuItemPrice {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .menuItemRating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .star {
+            color: #fbbf24;
+        }
+
+        .emptyResult {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px;
+            font-size: 18px;
+            color: var(--text-light-color);
+            background-color: var(--card-bg-color);
+            border-radius: 12px;
+            box-shadow: var(--card-shadow);
+            display: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            margin-top: 60px;
+            border-top: 1px solid var(--text-light-color);
+            color: var(--text-light-color);
+        }
+
+        @media (max-width: 768px) {
+            .menuContainer {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .menuSection {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+
+            .logo {
+                font-size: 28px;
+            }
+
+            .tagline {
+                font-size: 16px;
+            }
+
+            .searchInput {
+                padding: 10px 16px;
+            }
+
+            .themeToggle {
+                top: 30px;
+                right: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .menuContainer {
+                grid-template-columns: 1fr;
+            }
+
+            .menuSection {
+                grid-template-columns: 1fr;
+            }
+
+            .categoryBtn {
+                padding: 6px 16px;
+                font-size: 12px;
+            }
+
+            .themeToggle {
+                top: 20px;
+                right: 10px;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .menuItem {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        /* Scroll Top Button */
+        .scrollTopBtn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            z-index: 99;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .scrollTopBtn.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scrollTopBtn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .scrollTopBtn {
+                width: 40px;
+                height: 40px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="overlay">
-        <div class="container">
-            <h1 class="title">Saytımız yenilənir.</h1>
-            <p class="description"> Çox yaxında sizinlə olacaq!</p>
-            <div class="glitch-text">
-                <p>Yenilənmə faizi: <span id="percentage">31%</span></p>
-            </div>
-            <p class="next">> Yenilənmə vaxtı</p>
-            <p class="next">> Yolunuzu gözləyirik</p>
-            <div class="cursor"></div>
+    <div class="container">
+        <header>
+            <div class="logo" data-aos="fade-down">Elegance</div>
+            <div class="tagline" data-aos="fade-up">Exquisite Culinary Experience</div>
+            <button class="themeToggle" id="themeToggle" data-aos="fade-left">
+                <i class="fas fa-moon"></i>
+            </button>
+        </header>
 
-            <!-- Sosyal Medya Bağlantıları -->
-            <div class="social-links">
-                <p><strong>Əlaqə:</strong></p>
-                <a href="https://www.linkedin.com/in/farhadsultan" target="_blank" class="social-icon">
-                    <i class="fab fa-linkedin"></i> LinkedIn
-                </a>
-                <a href="https://www.instagram.com/ferhad.sultann" target="_blank" class="social-icon">
-                    <i class="fab fa-instagram"></i> Instagram
-                </a>
-                <!-- WhatsApp bağlantısı -->
-                <a href="https://wa.me/944555254193" target="_blank" class="social-icon">
-                    <i class="fab fa-whatsapp"></i> WhatsApp
-                </a>
+        <div class="searchContainer" data-aos="fade-up">
+            <input type="text" class="searchInput" id="searchInput" placeholder="Search for dishes, ingredients...">
+            <div class="categoriesContainer" id="categoriesContainer">
+                <button class="categoryBtn active" data-category="all">All</button>
+                <button class="categoryBtn" data-category="appetizers">Appetizers</button>
+                <button class="categoryBtn" data-category="soups">Soups</button>
+                <button class="categoryBtn" data-category="salads">Salads</button>
+                <button class="categoryBtn" data-category="pasta">Pasta</button>
+                <button class="categoryBtn" data-category="seafood">Seafood</button>
+                <button class="categoryBtn" data-category="steaks">Steaks</button>
+                <button class="categoryBtn" data-category="pizza">Pizza</button>
+                <button class="categoryBtn" data-category="desserts">Desserts</button>
+                <button class="categoryBtn" data-category="beverages">Beverages</button>
+                <button class="categoryBtn" data-category="specialties">Specialties</button>
+            </div>
+        </div>
+
+        <div class="menuContainer" id="menuContainer">
+            <!-- Menu sections will be dynamically inserted here -->
+            <div class="emptyResult" id="emptyResult">
+                No menu items match your search. Please try different keywords.
             </div>
         </div>
     </div>
 
-<script>
-    // Faiz dəyərinin artıb-azalması üçün dəyişən
-let faiz = 31;  // Başlangıç faiz dəyəri
+    <footer>
+        <p>© 2025 Elegance Restaurant. All rights reserved.</p>
+    </footer>
 
-// Faiz dəyərinin artıb-azalmasını təmin edən funksiya
-function faizArtibAzal() {
-    // Faiz dəyərini təsadüfi artırıb-azaltma
-    let artir = Math.random() > 0.5;  // Təkrarlanan təsadüfi artırma/azaltma
-    let qiymetDeğişdir = artir ? Math.random() * 2 : Math.random() * -2; // Təsadüfi dəyişiklik
+    <div class="scrollTopBtn" id="scrollTopBtn">
+        <i class="fas fa-arrow-up"></i>
+    </div>
 
-    // Yeni faiz hesablanır
-    faiz = Math.max(0, Math.min(100, faiz + qiymetDeğişdir));  // Faiz dəyəri 0 ilə 100 arasında olmalıdır
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease',
+            once: true
+        });
 
-    // Yeni faiz dəyəri HTML elementinə yazılır
-    document.getElementById('percentage').textContent = faiz.toFixed(1) + '%';
-}
+        // Restaurant menu data
+        const menuData = {
+            appetizers: [
+                {
+                    id: 'app1',
+                    name: 'Bruschetta Classica',
+                    description: 'Fresh tomatoes, basil, garlic and olive oil on toasted artisan bread',
+                    price: 12.95,
+                    rating: 4.8,
+                    image: '/api/placeholder/400/300',
+                    category: 'appetizers'
+                },
+                {
+                    id: 'app2',
+                    name: 'Arancini',
+                    description: 'Crispy fried risotto balls filled with mozzarella, peas, and ground beef',
+                    price: 14.50,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'appetizers'
+                },
+                {
+                    id: 'app3',
+                    name: 'Calamari Fritti',
+                    description: 'Lightly breaded and fried squid served with lemon aioli',
+                    price: 16.95,
+                    rating: 4.6,
+                    image: '/api/placeholder/400/300',
+                    category: 'appetizers'
+                },
+                {
+                    id: 'app4',
+                    name: 'Antipasto Platter',
+                    description: 'Selection of Italian cured meats, cheeses, olives, and marinated vegetables',
+                    price: 24.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'appetizers'
+                },
+                {
+                    id: 'app5',
+                    name: 'Truffle Fries',
+                    description: 'Crispy fries tossed in truffle oil, parmesan, and herbs',
+                    price: 10.95,
+                    rating: 4.5,
+                    image: '/api/placeholder/400/300',
+                    category: 'appetizers'
+                }
+            ],
+            soups: [
+                {
+                    id: 'soup1',
+                    name: 'Zuppa di Pomodoro',
+                    description: 'Rich tomato soup with fresh basil and a touch of cream',
+                    price: 9.95,
+                    rating: 4.6,
+                    image: '/api/placeholder/400/300',
+                    category: 'soups'
+                },
+                {
+                    id: 'soup2',
+                    name: 'Minestrone',
+                    description: 'Classic Italian vegetable soup with beans, pasta, and fresh herbs',
+                    price: 10.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'soups'
+                },
+                {
+                    id: 'soup3',
+                    name: 'Lobster Bisque',
+                    description: 'Creamy lobster soup with a touch of brandy and fresh herbs',
+                    price: 15.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'soups'
+                },
+                {
+                    id: 'soup4',
+                    name: 'French Onion Soup',
+                    description: 'Caramelized onions in rich beef broth topped with gruyère cheese',
+                    price: 12.95,
+                    rating: 4.8,
+                    image: '/api/placeholder/400/300',
+                    category: 'soups'
+                },
+                {
+                    id: 'soup5',
+                    name: 'Mushroom Velouté',
+                    description: 'Silky smooth wild mushroom soup with truffle oil and crème fraîche',
+                    price: 13.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'soups'
+                }
+            ],
+            salads: [
+                {
+                    id: 'salad1',
+                    name: 'Caesar Salad',
+                    description: 'Crisp romaine lettuce with housemade dressing, croutons, and parmesan',
+                    price: 12.95,
+                    rating: 4.5,
+                    image: '/api/placeholder/400/300',
+                    category: 'salads'
+                },
+                {
+                    id: 'salad2',
+                    name: 'Mediterranean Salad',
+                    description: 'Mixed greens with cucumber, tomato, olives, feta, and red onion',
+                    price: 14.95,
+                    rating: 4.6,
+                    image: '/api/placeholder/400/300',
+                    category: 'salads'
+                },
+                {
+                    id: 'salad3',
+                    name: 'Caprese Salad',
+                    description: 'Fresh mozzarella, tomato, and basil drizzled with balsamic reduction',
+                    price: 15.95,
+                    rating: 4.8,
+                    image: '/api/placeholder/400/300',
+                    category: 'salads'
+                },
+                {
+                    id: 'salad4',
+                    name: 'Quinoa Spinach Salad',
+                    description: 'Baby spinach with quinoa, dried cranberries, walnuts, and feta cheese',
+                    price: 15.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'salads'
+                },
+                {
+                    id: 'salad5',
+                    name: 'Roasted Beet Salad',
+                    description: 'Mixed greens with roasted beets, goat cheese, candied walnuts, and citrus vinaigrette',
+                    price: 16.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'salads'
+                }
+            ],
+            pasta: [
+                {
+                    id: 'pasta1',
+                    name: 'Spaghetti Carbonara',
+                    description: 'Classic Roman dish with pancetta, egg, pecorino, and black pepper',
+                    price: 18.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'pasta'
+                },
+                {
+                    id: 'pasta2',
+                    name: 'Fettuccine Alfredo',
+                    description: 'Handmade fettuccine in a rich parmesan cream sauce',
+                    price: 17.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'pasta'
+                },
+                {
+                    id: 'pasta3',
+                    name: 'Penne Arrabbiata',
+                    description: 'Spicy tomato sauce with garlic, chili flakes, and fresh herbs',
+                    price: 16.95,
+                    rating: 4.5,
+                    image: '/api/placeholder/400/300',
+                    category: 'pasta'
+                },
+                {
+                    id: 'pasta4',
+                    name: 'Lobster Ravioli',
+                    description: 'Handmade ravioli filled with lobster meat in a saffron cream sauce',
+                    price: 24.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'pasta'
+                },
+                {
+                    id: 'pasta5',
+                    name: 'Tagliatelle Bolognese',
+                    description: 'Traditional slow-cooked meat sauce with fresh tagliatelle pasta',
+                    price: 19.95,
+                    rating: 4.8,
+                    image: '/api/placeholder/400/300',
+                    category: 'pasta'
+                }
+            ],
+            seafood: [
+                {
+                    id: 'seafood1',
+                    name: 'Grilled Salmon',
+                    description: 'Fresh Atlantic salmon with lemon herb butter and seasonal vegetables',
+                    price: 28.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'seafood'
+                },
+                {
+                    id: 'seafood2',
+                    name: 'Lobster Thermidor',
+                    description: 'Baked lobster with creamy brandy sauce and Gruyère cheese',
+                    price: 42.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'seafood'
+                },
+                {
+                    id: 'seafood3',
+                    name: 'Cioppino',
+                    description: 'San Francisco-style seafood stew with mussels, clams, shrimp, and fish',
+                    price: 32.95,
+                    rating: 4.8,
+                    image: '/api/placeholder/400/300',
+                    category: 'seafood'
+                },
+                {
+                    id: 'seafood4',
+                    name: 'Pan-Seared Scallops',
+                    description: 'Jumbo sea scallops with cauliflower purée and crispy pancetta',
+                    price: 34.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'seafood'
+                },
+                {
+                    id: 'seafood5',
+                    name: 'Grilled Octopus',
+                    description: 'Tender octopus with chorizo, potatoes, and smoked paprika oil',
+                    price: 29.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'seafood'
+                }
+            ],
+            steaks: [
+                {
+                    id: 'steak1',
+                    name: 'Filet Mignon',
+                    description: '8oz center-cut filet with red wine reduction and truffle butter',
+                    price: 42.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'steaks'
+                },
+                {
+                    id: 'steak2',
+                    name: 'Ribeye',
+                    description: '14oz prime ribeye with garlic herb butter and roasted potatoes',
+                    price: 39.95,
+                    rating: 4.8,
+                    image: '/api/placeholder/400/300',
+                    category: 'steaks'
+                },
+                {
+                    id: 'steak3',
+                    name: 'New York Strip',
+                    description: '12oz strip steak with peppercorn sauce and crispy onions',
+                    price: 36.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'steaks'
+                },
+                {
+                    id: 'steak4',
+                    name: 'Tomahawk',
+                    description: '32oz bone-in ribeye for two with choice of two sides',
+                    price: 89.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'steaks'
+                },
+                {
+                    id: 'steak5',
+                    name: 'Wagyu Flat Iron',
+                    description: '8oz American Wagyu flat iron with chimichurri sauce',
+                    price: 48.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'steaks'
+                }
+            ],
+            pizza: [
+                {
+                    id: 'pizza1',
+                    name: 'Margherita',
+                    description: 'San Marzano tomato sauce, fresh mozzarella, and basil',
+                    price: 16.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'pizza'
+                },
+                {
+                    id: 'pizza2',
+                    name: 'Quattro Formaggi',
+                    description: 'Four cheese pizza with mozzarella, gorgonzola, ricotta, and parmesan',
+                    price: 18.95,
+                    rating: 4.8,
+                    image: '/api/placeholder/400/300',
+                    category: 'pizza'
+                },
+                {
+                    id: 'pizza3',
+                    name: 'Diavola',
+                    description: 'Spicy salami, roasted red peppers, and chili flakes',
+                    price: 19.95,
+                    rating: 4.6,
+                    image: '/api/placeholder/400/300',
+                    category: 'pizza'
+                },
+                {
+                    id: 'pizza4',
+                    name: 'Prosciutto e Funghi',
+                    description: 'Prosciutto di Parma, wild mushrooms, and truffle oil',
+                    price: 21.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'pizza'
+                },
+                {
+                    id: 'pizza5',
+                    name: 'Mediterranean',
+                    description: 'Artichokes, olives, feta cheese, and sun-dried tomatoes',
+                    price: 19.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+category: 'pizza'
+                }
+            ],
+            desserts: [
+                {
+                    id: 'dessert1',
+                    name: 'Tiramisu',
+                    description: 'Classic Italian dessert with coffee-soaked ladyfingers and mascarpone cream',
+                    price: 9.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'desserts'
+                },
+                {
+                    id: 'dessert2',
+                    name: 'Molten Chocolate Cake',
+                    description: 'Warm chocolate cake with liquid center and vanilla bean ice cream',
+                    price: 10.95,
+                    rating: 4.8,
+                    image: '/api/placeholder/400/300',
+                    category: 'desserts'
+                },
+                {
+                    id: 'dessert3',
+                    name: 'Crème Brûlée',
+                    description: 'Rich vanilla custard with caramelized sugar crust',
+                    price: 9.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'desserts'
+                },
+                {
+                    id: 'dessert4',
+                    name: 'New York Cheesecake',
+                    description: 'Creamy cheesecake with graham cracker crust and berry compote',
+                    price: 10.95,
+                    rating: 4.6,
+                    image: '/api/placeholder/400/300',
+                    category: 'desserts'
+                },
+                {
+                    id: 'dessert5',
+                    name: 'Gelato Selection',
+                    description: 'Three scoops of housemade gelato with biscotti',
+                    price: 8.95,
+                    rating: 4.5,
+                    image: '/api/placeholder/400/300',
+                    category: 'desserts'
+                }
+            ],
+            beverages: [
+                {
+                    id: 'bev1',
+                    name: 'Signature Cocktails',
+                    description: 'Selection of house specialty cocktails crafted by our mixologists',
+                    price: 14.95,
+                    rating: 4.8,
+                    image: '/api/placeholder/400/300',
+                    category: 'beverages'
+                },
+                {
+                    id: 'bev2',
+                    name: 'Italian Wine Collection',
+                    description: 'Curated selection of fine Italian wines by the glass',
+                    price: 12.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'beverages'
+                },
+                {
+                    id: 'bev3',
+                    name: 'Craft Beer Selection',
+                    description: 'Local and imported craft beers on tap and bottled',
+                    price: 8.95,
+                    rating: 4.6,
+                    image: '/api/placeholder/400/300',
+                    category: 'beverages'
+                },
+                {
+                    id: 'bev4',
+                    name: 'Artisanal Coffee',
+                    description: 'Freshly roasted coffee prepared in various methods',
+                    price: 5.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'beverages'
+                },
+                {
+                    id: 'bev5',
+                    name: 'Fresh Pressed Juices',
+                    description: 'Selection of seasonal fruits juiced to order',
+                    price: 7.95,
+                    rating: 4.5,
+                    image: '/api/placeholder/400/300',
+                    category: 'beverages'
+                }
+            ],
+            specialties: [
+                {
+                    id: 'spec1',
+                    name: 'Osso Buco',
+                    description: 'Braised veal shanks with gremolata and saffron risotto',
+                    price: 36.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'specialties'
+                },
+                {
+                    id: 'spec2',
+                    name: 'Truffle Risotto',
+                    description: 'Creamy Arborio rice with shaved black truffle and aged parmesan',
+                    price: 32.95,
+                    rating: 4.8,
+                    image: '/api/placeholder/400/300',
+                    category: 'specialties'
+                },
+                {
+                    id: 'spec3',
+                    name: 'Duck Confit',
+                    description: 'Slow-cooked duck leg with cherry reduction and potato purée',
+                    price: 34.95,
+                    rating: 4.7,
+                    image: '/api/placeholder/400/300',
+                    category: 'specialties'
+                },
+                {
+                    id: 'spec4',
+                    name: 'Beef Wellington',
+                    description: 'Tenderloin wrapped in mushroom duxelles and puff pastry',
+                    price: 42.95,
+                    rating: 4.9,
+                    image: '/api/placeholder/400/300',
+                    category: 'specialties'
+                },
+                {
+                    id: 'spec5',
+                    name: 'Seafood Paella',
+                    description: 'Spanish rice dish with assorted seafood, saffron, and chorizo',
+                    price: 38.95,
+                    rating: 4.8,
+                    image: '/api/placeholder/400/300',
+                    category: 'specialties'
+                }
+            ]
+        };
 
-// 1 saniyədə bir faiz dəyərini yeniləyirik
-setInterval(faizArtibAzal, 1000);
+        // DOM Elements
+        const menuContainer = document.getElementById('menuContainer');
+        const searchInput = document.getElementById('searchInput');
+        const categoryBtns = document.querySelectorAll('.categoryBtn');
+        const emptyResult = document.getElementById('emptyResult');
+        const themeToggle = document.getElementById('themeToggle');
+        const scrollTopBtn = document.getElementById('scrollTopBtn');
 
-</script>
+        // Initialize Menu
+        function initMenu() {
+            // Create menu sections
+            for (const category in menuData) {
+                createMenuSection(category, menuData[category]);
+            }
+            
+            // Show all menu items initially
+            filterMenuByCategory('all');
+        }
+
+        // Create menu section
+        function createMenuSection(category, items) {
+            const sectionDiv = document.createElement('div');
+            sectionDiv.className = 'menuSection';
+            sectionDiv.id = `section-${category}`;
+            sectionDiv.dataset.category = category;
+            
+            const sectionTitle = document.createElement('h2');
+            sectionTitle.className = 'sectionTitle';
+            sectionTitle.textContent = category.charAt(0).toUpperCase() + category.slice(1);
+            sectionDiv.appendChild(sectionTitle);
+            
+            // Create menu items
+            items.forEach(item => {
+                const menuItemDiv = createMenuItem(item);
+                sectionDiv.appendChild(menuItemDiv);
+            });
+            
+            menuContainer.appendChild(sectionDiv);
+        }
+
+        // Create menu item
+        function createMenuItem(item) {
+            const itemDiv = document.createElement('div');
+            itemDiv.className = 'menuItem';
+            itemDiv.dataset.aos = 'fade-up';
+            itemDiv.dataset.category = item.category;
+            
+            const html = `
+                <img src="${item.image}" alt="${item.name}" class="menuItemImg">
+                <div class="menuItemContent">
+                    <h3 class="menuItemTitle">${item.name}</h3>
+                    <p class="menuItemDesc">${item.description}</p>
+                    <div class="menuItemFooter">
+                        <div class="menuItemPrice">$${item.price.toFixed(2)}</div>
+                        <div class="menuItemRating">
+                            ${getRatingStars(item.rating)}
+                            <span>${item.rating.toFixed(1)}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            itemDiv.innerHTML = html;
+            return itemDiv;
+        }
+
+        // Get rating stars
+        function getRatingStars(rating) {
+            let stars = '';
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 >= 0.5;
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Filter menu by category
+        function filterMenuByCategory(category) {
+            const sections = document.querySelectorAll('.menuSection');
+            
+            if (category === 'all') {
+                sections.forEach(section => {
+                    section.classList.add('active');
+                });
+            } else {
+                sections.forEach(section => {
+                    if (section.dataset.category === category) {
+                        section.classList.add('active');
+                    } else {
+                        section.classList.remove('active');
+                    }
+                });
+            }
+            
+            // Update active button
+            categoryBtns.forEach(btn => {
+                if (btn.dataset.category === category) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+        }
+
+        // Search functionality
+        function searchMenu(query) {
+            query = query.toLowerCase().trim();
+            
+            if (query === '') {
+                // Reset to showing all items
+                filterMenuByCategory(document.querySelector('.categoryBtn.active').dataset.category);
+                emptyResult.style.display = 'none';
+                return;
+            }
+            
+            let foundItems = false;
+            
+            // Hide all sections first
+            document.querySelectorAll('.menuSection').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Search through all items
+            for (const category in menuData) {
+                const items = menuData[category];
+                const section = document.getElementById(`section-${category}`);
+                
+                if (!section) continue;
+                
+                let sectionHasMatch = false;
+                
+                // Get all item elements in this section (excluding the title)
+                const itemElements = section.querySelectorAll('.menuItem');
+                
+                items.forEach((item, index) => {
+                    const itemElement = itemElements[index];
+                    
+                    if (!itemElement) return;
+                    
+                    // Check if item matches search query
+                    const matchesName = item.name.toLowerCase().includes(query);
+                    const matchesDesc = item.description.toLowerCase().includes(query);
+                    
+                    if (matchesName || matchesDesc) {
+                        itemElement.style.display = 'flex';
+                        sectionHasMatch = true;
+                        foundItems = true;
+                    } else {
+                        itemElement.style.display = 'none';
+                    }
+                });
+                
+                // Show section if it has matching items
+                if (sectionHasMatch) {
+                    section.classList.add('active');
+                }
+            }
+            
+            // Show/hide empty result message
+            emptyResult.style.display = foundItems ? 'none' : 'block';
+        }
+
+        // Toggle dark/light theme
+        function toggleTheme() {
+            const body = document.body;
+            const icon = themeToggle.querySelector('i');
+            
+            body.classList.toggle('darkMode');
+            
+            if (body.classList.contains('darkMode')) {
+                icon.className = 'fas fa-sun';
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+        }
+
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Check scroll position for scroll to top button
+        function checkScrollPosition() {
+            if (window.scrollY > 300) {
+                scrollTopBtn.classList.add('visible');
+            } else {
+                scrollTopBtn.classList.remove('visible');
+            }
+        }
+
+        // Event Listeners
+        searchInput.addEventListener('input', () => {
+            searchMenu(searchInput.value);
+        });
+
+        categoryBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const category = btn.dataset.category;
+                filterMenuByCategory(category);
+                searchInput.value = ''; // Clear search when changing category
+            });
+        });
+
+        themeToggle.addEventListener('click', toggleTheme);
+        scrollTopBtn.addEventListener('click', scrollToTop);
+        window.addEventListener('scroll', checkScrollPosition);
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            initMenu();
+            checkScrollPosition();
+        });
+    </script>
 </body>
 </html>
