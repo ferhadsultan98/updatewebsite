@@ -50,12 +50,17 @@
 
         /* Navbar Styles */
         .navbar {
-            background-color: var(--card-bg-color);
-            box-shadow: var(--card-shadow);
+            background-color: transparent;
             position: sticky;
             top: 0;
             z-index: 100;
             padding: 15px 20px;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background-color: var(--card-bg-color);
+            box-shadow: var(--card-shadow);
         }
 
         .navbarContainer {
@@ -340,7 +345,8 @@
         }
 
         .menuItemFooter {
-            display Seduction: space-between;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
             margin-top: auto;
         }
@@ -605,7 +611,7 @@
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar">
+    <nav class="navbar" id="navbar">
         <div class="navbarContainer">
             <a href="#home" class="navbarLogo">Zəriflik</a>
             <button class="hamburger" id="hamburger">
@@ -790,6 +796,7 @@
         };
 
         // DOM Elements
+        const navbar = document.getElementById('navbar');
         const menuContainer = document.getElementById('menuContainer');
         const searchInput = document.getElementById('searchInput');
         const categoryBtns = document.querySelectorAll('.categoryBtn');
@@ -805,6 +812,20 @@
             hamburger.querySelector('i').classList.toggle('fa-bars');
             hamburger.querySelector('i').classList.toggle('fa-times');
         });
+
+        // Close Navbar on NavLink Click
+        document.querySelectorAll('.navLink').forEach(link => {
+            link.addEventListener('click', () => {
+                navbarMenu.classList.remove('active');
+                hamburger.querySelector('i').classList.add('fa-bars');
+                hamburger.querySelector('i').classList.remove('fa-times');
+            });
+        });
+
+        // Navbar Scroll Effect
+        function checkNavbarScroll() {
+            navbar.classList.toggle('scrolled', window.scrollY > 100);
+        }
 
         // Slider Functionality
         const slides = document.querySelectorAll('.slide');
@@ -829,6 +850,7 @@
             for (const category in menuData) {
                 createMenuSection(category, menuData[category]);
             }
+            addGlobalShowMoreButton();
             filterMenuByCategory('all');
         }
 
@@ -878,6 +900,25 @@
             menuContainer.appendChild(sectionDiv);
         }
 
+        // Add Global Show More Button for "All" Category
+        function addGlobalShowMoreButton() {
+            const totalItems = Object.values(menuData).reduce((sum, items) => sum + items.length, 0);
+            if (totalItems > 5) {
+                const globalShowMoreBtn = document.createElement('button');
+                globalShowMoreBtn.className = 'showMoreBtn';
+                globalShowMoreBtn.id = 'globalShowMoreBtn';
+                globalShowMoreBtn.textContent = 'Daha Çox Göstər';
+                globalShowMoreBtn.addEventListener('click', () => {
+                    document.querySelectorAll('.menuSection .menuItem.hidden').forEach(item => {
+                        item.classList.remove('hidden');
+                        item.style.animation = 'fadeIn 0.5s ease forwards';
+                    });
+                    globalShowMoreBtn.style.display = 'none';
+                });
+                menuContainer.appendChild(globalShowMoreBtn);
+            }
+        }
+
         // Create Menu Item
         function createMenuItem(item) {
             const itemDiv = document.createElement('div');
@@ -924,21 +965,41 @@
         // Filter Menu by Category
         function filterMenuByCategory(category) {
             const sections = document.querySelectorAll('.menuSection');
+            const globalShowMoreBtn = document.getElementById('globalShowMoreBtn');
 
-            sections.forEach(section => {
-                const items = section.querySelectorAll('.menuItem');
-                items.forEach((item, index) => {
-                    item.classList.toggle('hidden', index > 4 && category === section.dataset.category);
-                    item.style.display = 'flex';
+            if (category === 'all') {
+                sections.forEach(section => {
+                    section.classList.add('active');
+                    const items = section.querySelectorAll('.menuItem');
+                    items.forEach((item, index) => {
+                        item.classList.toggle('hidden', index > 4);
+                        item.style.display = 'flex';
+                    });
+                    const showMoreBtn = section.querySelector('.showMoreBtn');
+                    if (showMoreBtn) {
+                        showMoreBtn.style.display = 'none';
+                    }
                 });
-
-                const showMoreBtn = section.querySelector('.showMoreBtn');
-                if (showMoreBtn) {
-                    showMoreBtn.style.display = items.length > 5 && category === section.dataset.category ? 'block' : 'none';
+                if (globalShowMoreBtn) {
+                    globalShowMoreBtn.style.display = 'block';
                 }
-
-                section.classList.toggle('active', category === 'all' || section.dataset.category === category);
-            });
+            } else {
+                sections.forEach(section => {
+                    const items = section.querySelectorAll('.menuItem');
+                    items.forEach((item, index) => {
+                        item.classList.toggle('hidden', index > 4 && category === section.dataset.category);
+                        item.style.display = 'flex';
+                    });
+                    const showMoreBtn = section.querySelector('.showMoreBtn');
+                    if (showMoreBtn) {
+                        showMoreBtn.style.display = items.length > 5 && category === section.dataset.category ? 'block' : 'none';
+                    }
+                    section.classList.toggle('active', section.dataset.category === category);
+                });
+                if (globalShowMoreBtn) {
+                    globalShowMoreBtn.style.display = 'none';
+                }
+            }
 
             categoryBtns.forEach(btn => {
                 btn.classList.toggle('active', btn.dataset.category === category);
@@ -964,6 +1025,11 @@
                     showMoreBtn.style.display = 'none';
                 }
             });
+
+            const globalShowMoreBtn = document.getElementById('globalShowMoreBtn');
+            if (globalShowMoreBtn) {
+                globalShowMoreBtn.style.display = 'none';
+            }
 
             for (const category in menuData) {
                 const items = menuData[category];
@@ -1026,6 +1092,7 @@
             } else {
                 scrollTopBtn.classList.remove('visible');
             }
+            checkNavbarScroll();
         }
 
         // Event Listeners
